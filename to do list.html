@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner | Interactive Lists</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; padding: 20px; }
+        .planner-container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        h2 { text-align: center; color: #2c3e50; }
+        
+        /* Input Area */
+        .input-group { display: flex; gap: 10px; margin-bottom: 30px; }
+        input[type="text"], select { padding: 12px; border: 1px solid #ddd; border-radius: 5px; outline: none; }
+        input[type="text"] { flex-grow: 1; }
+        button#addBtn { padding: 12px 20px; background: #d4a373; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button#addBtn:hover { background: #b88b5d; }
+
+        /* List Styling */
+        .list-section { margin-bottom: 20px; }
+        .list-section h3 { border-left: 4px solid #d4a373; padding-left: 10px; color: #555; font-size: 1.1rem; }
+        ul { list-style: none; padding: 0; }
+        li { 
+            background: #fff; border: 1px solid #eee; margin-bottom: 8px; padding: 12px; 
+            display: flex; justify-content: space-between; align-items: center; border-radius: 5px;
+            transition: 0.2s;
+        }
+        li.checked { text-decoration: line-through; color: #888; background: #f9f9f9; }
+        
+        .delete-btn { color: #e74c3c; cursor: pointer; font-weight: bold; padding: 0 10px; }
+        .item-text { flex-grow: 1; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="planner-container">
+    <h2>🗺️ My Travel Planner</h2>
+
+    <div class="input-group">
+        <input type="text" id="todoInput" placeholder="Add a new task...">
+        <select id="categorySelect">
+            <option value="packing">🧳 Packing</option>
+            <option value="bookings">🎟️ Bookings</option>
+            <option value="bucketlist">📸 Bucket List</option>
+        </select>
+        <button id="addBtn">Add</button>
+    </div>
+
+    <div class="list-section">
+        <h3>Packing List</h3>
+        <ul id="packingList">
+            <li><span class="item-text">Passport and Visa</span><span class="delete-btn">&times;</span></li>
+            <li><span class="item-text">Universal Adapter</span><span class="delete-btn">&times;</span></li>
+        </ul>
+    </div>
+
+    <div class="list-section">
+        <h3>Bookings & Paperwork</h3>
+        <ul id="bookingsList">
+            <li><span class="item-text">Flight to Tokyo</span><span class="delete-btn">&times;</span></li>
+        </ul>
+    </div>
+
+    <div class="list-section">
+        <h3>Bucket List</h3>
+        <ul id="bucketlistList">
+            <li><span class="item-text">Sunrise at Mt. Fuji</span><span class="delete-btn">&times;</span></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    const addBtn = document.getElementById('addBtn');
+    const input = document.getElementById('todoInput');
+    const category = document.getElementById('categorySelect');
+
+    // Function to add new item
+    addBtn.addEventListener('click', () => {
+        if (input.value === '') return alert("Please enter a task!");
+
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="item-text">${input.value}</span><span class="delete-btn">&times;</span>`;
+        
+        // Decide which list to append to
+        const listId = category.value + "List";
+        document.getElementById(listId).appendChild(li);
+        
+        input.value = ''; // clear input
+    });
+
+    // Handle Click Events (Delete or Check)
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+            e.target.parentElement.remove();
+        } else if (e.target.classList.contains('item-text')) {
+            e.target.parentElement.classList.toggle('checked');
+        }
+    });
+</script>
+
+</body>
+</html>

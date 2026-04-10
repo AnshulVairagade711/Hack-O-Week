@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan's Coffee - Premium Coffee Selection</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coffee-dark: #1a0f0a;
+            --coffee-medium: #3d2317;
+            --coffee-light: #6b4423;
+            --coffee-cream: #d4a574;
+            --coffee-gold: #8b5a2b;
+            --cream: #f5e6d3;
+            --warm-white: #faf7f2;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d4bc 50%, #d4c4a8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Steam animation */
+        .steam-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            height: 30px;
+        }
+        .steam {
+            position: absolute;
+            width: 6px;
+            height: 25px;
+            background: linear-gradient(to top, rgba(255,255,255,0.8), transparent);
+            border-radius: 50%;
+            filter: blur(4px);
+            animation: steam 2.5s infinite ease-out;
+        }
+        .steam:nth-child(1) { left: 35%; animation-delay: 0s; }
+        .steam:nth-child(2) { left: 50%; animation-delay: 0.4s; }
+        .steam:nth-child(3) { left: 65%; animation-delay: 0.8s; }
+        @keyframes steam {
+            0% { transform: translateY(0) scaleX(1); opacity: 0.8; }
+            25% { transform: translateY(-10px) scaleX(1.2); opacity: 0.5; }
+            50% { transform: translateY(-20px) scaleX(0.9); opacity: 0.3; }
+            75% { transform: translateY(-28px) scaleX(1.1); opacity: 0.15; }
+            100% { transform: translateY(-35px) scaleX(0.8); opacity: 0; }
+        }
+        /* Product card animations */
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(61, 35, 23, 0.1);
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(61, 35, 23, 0.2);
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+        .product-image {
+            transition: transform 0.5s ease;
+        }
+        /* Price tag animation */
+        .price-tag {
+            animation: pricePulse 3s infinite ease-in-out;
+        }
+        @keyframes pricePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        /* Button hover effect */
+        .add-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #6b4423, #3d2317);
+        }
+        .add-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .add-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        .add-btn:hover {
+            background: linear-gradient(135deg, #8b5a2b, #5a3a1a);
+            transform: scale(1.05);
+        }
+        /* Floating animation for badges */
+        .badge {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Header animation */
+        .header-bg {
+            background: linear-gradient(135deg, #1a0f0a 0%, #3d2317 50%, #6b4423 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 50%);
+            animation: shimmer 8s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Image zoom on hover */
+        .product-image-wrapper {
+            overflow: hidden;
+        }
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #d4a574, #8b5a2b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* Bounce animation for featured badge */
+        .bounce-badge {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+    </style>
+</head>
+<body class="pb-20">
+    <!-- Header -->
+    <header class="header-bg text-white py-12 shadow-2xl relative">
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="flex items-center justify-center gap-4 mb-3">
+                <div class="relative">
+                    <svg class="w-16 h-16 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M2 21V19H4V17H2V15H4V13H2V11H4V9H2V7H4V5H2V3H6V1H8V3H10V1H12V3H14V1H16V3H18V1H20V3H22V5H20V7H22V9H20V11H22V13H20V15H22V17H20V19H22V21H20V23H18V21H16V23H14V21H12V23H10V21H8V23H6V21H4V23H2V21Z"/>
+                    </svg>
+                    <div class="steam-container absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <div class="steam"></div>
+                        <div class="steam"></div>
+                        <div class="steam"></div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-display text-5xl md:text-6xl font-bold tracking-wide">Artisan's Coffee</h1>
+                    <p class="text-amber-300 text-lg font-light tracking-widest uppercase mt-1">Premium Hand-Roasted Selection</p>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-center gap-8 text-amber-200">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    <span class="font-semibold">9999</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    <span class="font-semibold">artisanscoffee@gmail.com</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Hero Section -->
+    <section class="relative py-12 bg-gradient-to-b from-[#6b4423] via-[#5a3a1a] to-[#3d2317]">
+        <div class="container mx-auto px-4 text-center text-white relative z-10">
+            <h2 class="font-display text-3xl md:text-4xl mb-3">☕ Discover Our Finest Blends</h2>
+            <p class="text-amber-100/90 max-w-2xl mx-auto text-base">Each cup tells a story of passion, tradition, and the finest beans sourced from around the world.</p>
+        </div>
+    </section>
+    <!-- Products Grid -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            
+            <!-- Ethiopian Yirgacheffe -->
+            <div class="product-card reveal">
+                <div class="product-image-wrapper relative">
+                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=400&h=400&fit=crop&q=80" alt="Ethiopian Yirgacheffe Coffee" class="product-image w-full h-56 object-cover">
+                    <span class="badge absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs px-3 py-1.5 rounded-full font-bold shadow-lg">🔥 Best Seller</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-xl font-bold text-[#3d2317] mb-1">Ethiopian Yirgacheffe</h3>
+                    <p class="text-gray-500 text-sm mb-3">Bright, fruity notes with blueberry & citrus</p>
+                    <div class="flex items-center gap-1 mb-3">
+                        <span class="text-amber-500 text-sm">★★★★★</span>
+                        <span class="text-gray-400 text-xs">(128)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="price-tag text-2xl font-bold gradient-text">₹599</span>
+                        <button class="add-btn text-white px-4 py-2 rounded-full text-sm font-bold">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Colombian Supremo -->
+            <div class="product-card reveal">
+                <div class="product-image-wrapper relative">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=400&fit=crop&q=80" alt="Colombian Supremo Coffee" class="product-image w-full h-56 object-cover">
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-xl font-bold text-[#3d2317] mb-1">Colombian Supremo</h3>
+                    <p class="text-gray-500 text-sm mb-3">Rich, nutty flavor with caramel sweetness</p>
+                    <div class="flex items-center gap-1 mb-3">
+                        <span class="text-amber-500 text-sm">★★★★☆</span>
+                        <span class="text-gray-400 text-xs">(95)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="price-tag text-2xl font-bold gradient-text">₹549</span>
+                        <button class="add-btn text-white px-4 py-2 rounded-full text-sm font-bold">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Brazilian Santos -->
+            <div class="product-card reveal">
+                <div class="product-image-wrapper relative">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop&q=80" alt="Brazilian Santos Coffee" class="product-image w-full h-56 object-cover">
+                    <span class="badge absolute top-3 left-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs px-3 py-1.5 rounded-full font-bold shadow-lg">🌿 Organic</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-xl font-bold text-[#3d2317] mb-1">Brazilian Santos</h3>
+                    <p class="text-gray-500 text-sm mb-3">Smooth, chocolatey with low acidity</p>
+                    <div class="flex items-center gap-1 mb-3">
+                        <span class="text-amber-500 text-sm">★★★★★</span>
+                        <span class="text-gray-400 text-xs">(156)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="price-tag text-2xl font-bold gradient-text">₹499</span>
+                        <button class="add-btn text-white px-4 py-2 rounded-full text-sm font-bold">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Sumatra Mandheling -->
+            <div class="product-card reveal">
+                <div class="product-image-wrapper relative">
+                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=400&fit=crop&q=80" alt="Sumatra Mandheling Coffee" class="product-image w-full h-56 object-cover">
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-xl font-bold text-[#3d2317] mb-1">Sumatra Mandheling</h3>
+                    <p class="text-gray-500 text-sm mb-3">Earthy, full-bodied with herbal notes</p>
+                    <div class="flex items-center gap-1 mb-3">
+                        <span class="text-amber-500 text-sm">★★★★☆</span>
+                        <span class="text-gray-400 text-xs">(87)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="price-tag text-2xl font-bold gradient-text">₹649</span>
+                        <button class="add-btn text-white px-4 py-2 rounded-full text-sm font-bold">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Costa Rican Tarrazú -->
+            <div class="product-card reveal">
+                <div class="product-image-wrapper relative">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop&q=80" alt="Costa Rican Tarrazú Coffee" class="product-image w-full h-56 object-cover">
+                    <span class="badge absolute top-3 left-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs px-3 py-1.5 rounded-full font-bold shadow-lg bounce-badge">✨ New</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-xl font-bold text-[#3d2317] mb-1">Costa Rican Tarrazú</h3>
+                    <p class="text-gray-500 text-sm mb-3">Clean, bright with honey-like sweetness</p>
+                    <div class="flex items-center gap-1 mb-3">
+                        <span class="text-amber-500 text-sm">★★★★★</span>
+                        <span class="text-gray-400 text-xs">(64)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="price-tag text-2xl font-bold gradient-text">₹579</span>
+                        <button class="add-btn text-white px-4 py-2 rounded-full text-sm font-bold">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Kenyan AA -->
+            <div class="product-card reveal">
+                <div class="product-image-wrapper relative">
+                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400&h=400&fit=crop&q=80" alt="Kenyan AA Coffee" class="product-image w-full h-56 object-cover">
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-xl font-bold text-[#3d2317] mb-1">Kenyan AA</h3>
+                    <p class="text-gray-500 text-sm mb-3">Bold, wine-like acidity with berry notes</p>
+                    <div class="flex items-center gap-1 mb-3">
+                        <span class="text-amber-500 text-sm">★★★★★</span>
+                        <span class="text-gray-400 text-xs">(112)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="price-tag text-2xl font-bold gradient-text">₹699</span>
+                        <button class="add-btn text-white px-4 py-2 rounded-full text-sm font-bold">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Italian Espresso Blend -->
+            <div class="product-card reveal">
+                <div class="product-image-wrapper relative">
+                    <img src="https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=400&fit=crop&q=80" alt="Italian Espresso Blend" class="product-image w-full h-56 object-cover">
+                    <span class="badge absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs px-3 py-1.5 rounded-full font-bold shadow-lg">⭐ Popular</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-xl font-bold text-[#3d2317] mb-1">Italian Espresso Blend</h3>
+                    <p class="text-gray-500 text-sm mb-3">Intense, creamy with caramel undertones</p>
+                    <div class="flex items-center gap-1 mb-3">
+                        <span class="text-amber-500 text-sm">★★★★★</span>
+                        <span class="text-gray-400 text-xs">(203)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="price-tag text-2xl font-bold gradient-text">₹529</span>
+                        <button class="add-btn text-white px-4 py-2 rounded-full text-sm font-bold">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Decaf Colombian -->
+            <div class="product-card reveal">
+                <div class="product-image-wrapper relative">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400&h=400&fit=crop&q=80" alt="Decaf Colombian Coffee" class="product-image w-full h-56 object-cover">
+                    <span class="badge absolute top-3 left-3 bg-gradient-to-r from-teal-500 to-teal-600 text-white text-xs px-3 py-1.5 rounded-full font-bold shadow-lg">☕ Decaf</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-xl font-bold text-[#3d2317] mb-1">Decaf Colombian</h3>
+                    <p class="text-gray-500 text-sm mb-3">All the flavor, none of the caffeine</p>
+                    <div class="flex items-center gap-1 mb-3">
+                        <span class="text-amber-500 text-sm">★★★★☆</span>
+                        <span class="text-gray-400 text-xs">(78)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="price-tag text-2xl font-bold gradient-text">₹599</span>
+                        <button class="add-btn text-white px-4 py-2 rounded-full text-sm font-bold">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Contact Section -->
+    <section class="bg-gradient-to-b from-[#3d2317] to-[#1a0f0a] py-12">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-2xl p-8 max-w-3xl mx-auto shadow-xl border border-amber-100">
+                <h2 class="font-display text-3xl font-bold text-center text-[#3d2317] mb-8">Get In Touch</h2>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div>
+                        <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center shadow-lg mx-auto mb-3">
+                            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-1">Call Us</p>
+                        <p class="text-2xl font-bold text-[#3d2317]">9999</p>
+                    </div>
+                    <div>
+                        <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center shadow-lg mx-auto mb-3">
+                            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-1">Email Us</p>
+                        <p class="text-sm font-bold text-[#3d2317] break-all">artisanscoffee@gmail.com</p>
+                    </div>
+                    <div>
+                        <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center shadow-lg mx-auto mb-3">
+                            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-1">Location</p>
+                        <p class="text-lg font-bold text-[#3d2317]">Mumbai, India</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-[#1a0f0a] text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <svg class="w-10 h-10 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M2 21V19H4V17H2V15H4V13H2V11H4V9H2V7H4V5H2V3H6V1H8V3H10V1H12V3H14V1H16V3H18V1H20V3H22V5H20V7H22V9H20V11H22V13H20V15H22V17H20V19H22V21H20V23H18V21H16V23H14V21H12V23H10V21H8V23H6V21H4V23H2V21Z"/>
+                </svg>
+                <h3 class="font-display text-2xl font-bold">Artisan's Coffee</h3>
+            </div>
+            <p class="text-amber-400 mb-4">Crafting perfect cups since 2010</p>
+            <div class="mt-4 flex justify-center gap-6 text-sm">
+                <a href="tel:9999" class="hover:text-amber-400 transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    9999
+                </a>
+                <a href="mailto:artisanscoffee@gmail.com" class="hover:text-amber-400 transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    artisanscoffee@gmail.com
+                </a>
+            </div>
+            <p class="mt-6 text-xs text-gray-500">© 2024 Artisan's Coffee. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+        // Add to cart button animation
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const originalText = this.innerHTML;
+                this.innerHTML = 'Added! ✓';
+                this.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.style.background = 'linear-gradient(135deg, #6b4423, #3d2317)';
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

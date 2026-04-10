@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExploreWorld - Travel Blog</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #e3f2fd, #fce4ec);
+    color: #333;
+}
+
+/* NAVIGATION BAR */
+header nav {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+nav .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+nav .nav-links li a:hover {
+    color: #ffeb3b;
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+    background-size: cover;
+    background-position: center;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+header .header-content {
+    margin-top: 80px; /* leave space for nav */
+}
+
+header h1 {
+    font-size: 3rem;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+/* CONTAINER */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 50px auto;
+}
+
+/* BLOG CARDS */
+.blog-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-10px);
+}
+
+.blog-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.blog-content {
+    padding: 25px;
+}
+
+.blog-content h2 {
+    margin-bottom: 15px;
+    color: #1565c0;
+}
+
+.blog-content p {
+    line-height: 1.7;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.read-more {
+    display: inline-block;
+    padding: 8px 15px;
+    background: #1565c0;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.read-more:hover {
+    background: #0d47a1;
+}
+
+/* FOOTER */
+footer {
+    background: #0d47a1;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* RESPONSIVE NAVIGATION */
+@media (max-width: 768px) {
+    nav .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: rgba(0,0,0,0.8);
+        flex-direction: column;
+        width: 200px;
+        text-align: right;
+        padding: 20px;
+        display: none;
+    }
+
+    nav .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    header .header-content {
+        margin-top: 100px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    .blog-content h2 {
+        font-size: 1.5rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <div class="logo">🌍 ExploreWorld</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Destinations</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="menu-toggle">☰</div>
+    </nav>
+    <div class="header-content">
+        <h1>🌍 ExploreWorld</h1>
+        <p>Discover Beautiful Places Around the Globe</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Santorini -->
+    <div class="blog-card">
+        <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad" alt="Santorini">
+        <div class="blog-content">
+            <h2>🇬🇷 Santorini, Greece</h2>
+            <p>
+                Santorini is famous for its stunning whitewashed buildings with blue domes,
+                overlooking the sparkling Aegean Sea. Known for breathtaking sunsets in Oia,
+                volcanic beaches, and charming villages, this island offers romance and relaxation.
+                Visitors can explore ancient ruins, enjoy fresh Mediterranean cuisine,
+                and experience unforgettable views from cliffside terraces.
+            </p>
+            <a href="#" class="read-more">Read More</a>
+        </div>
+    </div>
+
+    <!-- Kyoto -->
+    <div class="blog-card">
+        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e" alt="Kyoto">
+        <div class="blog-content">
+            <h2>🇯🇵 Kyoto, Japan</h2>
+            <p>
+                Kyoto is the cultural heart of Japan, filled with ancient temples,
+                peaceful bamboo forests, and traditional tea houses. The iconic
+                Fushimi Inari Shrine with its thousands of red torii gates is
+                a must-see attraction. During spring, cherry blossoms transform
+                the city into a magical pink paradise, while autumn brings vibrant red leaves.
+            </p>
+            <a href="#" class="read-more">Read More</a>
+        </div>
+    </div>
+
+    <!-- Cape Town -->
+    <div class="blog-card">
+        <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29" alt="Cape Town">
+        <div class="blog-content">
+            <h2>🇿🇦 Cape Town, South Africa</h2>
+            <p>
+                Cape Town is a breathtaking destination known for Table Mountain,
+                stunning coastal drives, and vibrant cultural heritage. Visitors can
+                hike scenic trails, relax at Camps Bay beach, or explore Robben Island.
+                With a blend of natural beauty and rich history, Cape Town offers
+                adventure, wildlife experiences, and world-class cuisine.
+            </p>
+            <a href="#" class="read-more">Read More</a>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 ExploreWorld Travel Blog | Designed with ❤️
+</footer>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
+
+toggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
+</script>
+
+</body>
+</html>
